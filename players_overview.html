@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Overview</title>
+</head>
+<body>
+    <h1>Player Overview</h1>
+    <ul id="playersList"></ul>
+    <script>
+        function loadPlayers() {
+            fetch('/players')
+                .then(response => response.json())
+                .then(data => {
+                    const playersList = document.getElementById('playersList');
+                    playersList.innerHTML = '';
+                    data.forEach(player => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${player.username} (ID: ${player.player_id})`;
+                        playersList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPlayers);
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Creation</title>
+</head>
+<body>
+    <h1>Character Creation</h1>
+    <form id="characterForm">
+        <label for="player_id">Player ID:</label>
+        <input type="number" id="player_id" name="player_id" required><br>
+        <label for="character_name">Character Name:</label>
+        <input type="text" id="character_name" name="character_name" required><br>
+        <label for="class_id">Class ID:</label>
+        <input type="number" id="class_id" name="class_id" required><br>
+        <label for="race_id">Race ID:</label>
+        <input type="number" id="race_id" name="race_id" required><br>
+        <label for="copper">Copper:</label>
+        <input type="number" id="copper" name="copper"><br>
+        <label for="silver">Silver:</label>
+        <input type="number" id="silver" name="silver"><br>
+        <label for="gold">Gold:</label>
+        <input type="number" id="gold" name="gold"><br>
+        <button type="submit">Create Character</button>
+    </form>
+
+    <script>
+        document.getElementById('characterForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            fetch('/characters', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Character created with ID: ' + data.character_id);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

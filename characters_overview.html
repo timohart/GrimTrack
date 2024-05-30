@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Overview</title>
+</head>
+<body>
+    <h1>Character Overview</h1>
+    <ul id="charactersList"></ul>
+    <script>
+        function loadCharacters() {
+            fetch('/characters')
+                .then(response => response.json())
+                .then(data => {
+                    const charactersList = document.getElementById('charactersList');
+                    charactersList.innerHTML = '';
+                    data.forEach(character => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${character.character_name} (ID: ${character.character_id})`;
+                        charactersList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCharacters);
+    </script>
+</body>
+</html>
