@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +16,7 @@
                     playersList.innerHTML = '';
                     data.forEach(player => {
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${player.username} (ID: ${player.player_id})`;
+                        listItem.textContent = `${player.f_name} ${player.l_name} (ID: ${player.player_id}) - Email: ${player.email}, Phone: ${player.phone_num}, Starting AP: ${player.starting_ap}, Registration Date: ${player.registration_date}`;
                         playersList.appendChild(listItem);
                     });
                 })

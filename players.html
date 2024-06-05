@@ -6,31 +6,27 @@
     <title>Player Creation</title>
 </head>
 <body>
-    <h1>Character Creation</h1>
-    <form id="characterForm">
-        <label for="player_id">Player ID:</label>
-        <input type="number" id="player_id" name="player_id" required><br>
-        <label for="character_name">Character Name:</label>
-        <input type="text" id="character_name" name="character_name" required><br>
-        <label for="class_id">Class ID:</label>
-        <input type="number" id="class_id" name="class_id" required><br>
-        <label for="race_id">Race ID:</label>
-        <input type="number" id="race_id" name="race_id" required><br>
-        <label for="copper">Copper:</label>
-        <input type="number" id="copper" name="copper"><br>
-        <label for="silver">Silver:</label>
-        <input type="number" id="silver" name="silver"><br>
-        <label for="gold">Gold:</label>
-        <input type="number" id="gold" name="gold"><br>
-        <button type="submit">Create Character</button>
+    <h1>Player Creation</h1>
+    <form id="playerForm">
+        <label for="f_name">First Name:</label>
+        <input type="text" id="f_name" name="f_name" required><br>
+        <label for="l_name">Last Name:</label>
+        <input type="text" id="l_name" name="l_name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone_num">Phone Number:</label>
+        <input type="text" id="phone_num" name="phone_num" required><br>
+        <label for="starting_ap">Starting AP:</label>
+        <input type="number" id="starting_ap" name="starting_ap" value="10" required><br>
+        <button type="submit">Create Player</button>
     </form>
 
     <script>
-        document.getElementById('characterForm').addEventListener('submit', function(event) {
+        document.getElementById('playerForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
-            fetch('/characters', {
+            fetch('/players', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,10 +35,18 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Character created with ID: ' + data.character_id);
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    alert('Player created with ID: ' + data.player_id);
+                }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
     </script>
 </body>
 </html>
+
